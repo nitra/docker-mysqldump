@@ -19,7 +19,7 @@ case "$BACKUP_TO" in
     ;;
 
   "gcs")
-    cmd="gcloud auth activate-service-account --key-file /credentials.json && $cmd"
+    # cmd="gcloud auth activate-service-account --key-file /credentials.json && $cmd"
     cmd="${cmd} | gsutil cp - gs://${GCS_BUCKET}/${GCS_PREFIX}${filename}"
     ;;
 
