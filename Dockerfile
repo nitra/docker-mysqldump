@@ -1,6 +1,4 @@
-FROM alpine
-LABEL maintainer="Wondershake"
-
+FROM google/cloud-sdk:alpine
 
 # Default Environment Variables
 
@@ -15,36 +13,13 @@ ENV GCS_PREFIX ""
 
 ENV BZIP2_LEVEL "9"
 
-
-# Build Configuration
-
-ENV GCLOUD_SDK_VERSION "242.0.0"
-
 RUN apk update \
   # Install Dependencies
   && apk --no-cache add \
   bash \
-  python2 \
-  py-pip \
   mariadb-client \
   && apk --no-cache add --virtual .build-deps \
-  curl \
-  # AWS CLI
-  && pip --no-cache-dir install \
-  awscli \
-  # Google Cloud SDK
-  && mkdir -p /opt \
-  && cd /opt \
-  && curl -o /opt/google-cloud-sdk.tar.gz \
-  https://dl.google.com/dl/cloudsdk/channels/rapid/downloads/google-cloud-sdk-${GCLOUD_SDK_VERSION}-linux-x86_64.tar.gz \
-  && tar zxf google-cloud-sdk.tar.gz \
-  && rm google-cloud-sdk.tar.gz \
-  && CLOUDSDK_PYTHON=$(which python2) \
-  google-cloud-sdk/install.sh \
-  --usage-reporting=false \
-  --rc-path=/etc/profile.d/gcloud.sh \
-  --quiet \
-  && bash -lc "yes | gcloud components update"
+  curl 
 
 COPY entrypoint.sh /opt/entrypoint.sh
 
