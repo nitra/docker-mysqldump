@@ -4,7 +4,7 @@ MYSQL_OPTIONS=${MYSQL_OPTIONS:-""}
 
 filename="${MYSQL_DATABASE}-backup-`date +%Y%m%d%H%M%S`.sql.bz2"
 
-cmd="mysqldump \
+cmd="mysqldump --single-transaction \
   -h${MYSQL_HOST} \
   -u${MYSQL_USER} \
   -p'${MYSQL_PASS}' \
